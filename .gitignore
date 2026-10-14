@@ -1,0 +1,31 @@
+# Virtual environments
+.venv/
+backend/env/
+env/
+venv/
+ENV/
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.cache/
+node_modules/
+dist/
+
+# Binaries & Tunnels
+cloudflared.exe
+*.exe
+
+# Logs & Temporary files
+*.log
+scratch/
+.system_generated/
+
+# OS files
+.DS_Store
+Thumbs.db

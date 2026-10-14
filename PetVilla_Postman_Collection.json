@@ -1,0 +1,569 @@
+{
+  "info": {
+    "_postman_id": "petvilla-api-collection-v1",
+    "name": "PetVilla E-Commerce REST API",
+    "description": "Complete API suite for PetVilla - Pet supplies, marketplace, cart, orders, and seller dashboard built with Django REST Framework & JWT.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01. Authentication & Users",
+      "item": [
+        {
+          "name": "Register New Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"petlover_1\",\n  \"email\": \"petlover1@example.com\",\n  \"password\": \"SecurePass123\",\n  \"user_type\": \"customer\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/register/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "register", ""]
+            }
+          }
+        },
+        {
+          "name": "Register New Seller",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"furry_store\",\n  \"email\": \"store@furry.com\",\n  \"password\": \"SellerPass123\",\n  \"user_type\": \"seller\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/register/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "register", ""]
+            }
+          }
+        },
+        {
+          "name": "Login (Customer)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.access) {",
+                  "    pm.environment.set(\"access_token\", jsonData.access);",
+                  "    pm.environment.set(\"refresh_token\", jsonData.refresh);",
+                  "    console.log(\"Access token saved to environment.\");",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"alex_customer\",\n  \"password\": \"CustomerPass123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/login/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "login", ""]
+            }
+          }
+        },
+        {
+          "name": "Login (Seller)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.access) {",
+                  "    pm.environment.set(\"seller_access_token\", jsonData.access);",
+                  "    pm.environment.set(\"access_token\", jsonData.access);",
+                  "    pm.environment.set(\"refresh_token\", jsonData.refresh);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"alice_petshop\",\n  \"password\": \"SellerPass123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/login/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "login", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/users/profile/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "profile", ""]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"Alex\",\n  \"last_name\": \"Johnson\",\n  \"email\": \"alex.j@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/profile/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "profile", ""]
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.access) {",
+                  "    pm.environment.set(\"access_token\", jsonData.access);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/token/refresh/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "token", "refresh", ""]
+            }
+          }
+        },
+        {
+          "name": "Logout (Blacklist Token)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/logout/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "logout", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02. Products & Catalog",
+      "item": [
+        {
+          "name": "List All Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", ""]
+            }
+          }
+        },
+        {
+          "name": "Featured Products Spotlight",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products/featured/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", "featured", ""]
+            }
+          }
+        },
+        {
+          "name": "Filter by Pet Type (Dogs)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products/?pet_type=dogs",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", ""],
+              "query": [{ "key": "pet_type", "value": "dogs" }]
+            }
+          }
+        },
+        {
+          "name": "Filter by Pet Type (Reptiles & Amphibians)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products/?pet_type=reptiles",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", ""],
+              "query": [{ "key": "pet_type", "value": "reptiles" }]
+            }
+          }
+        },
+        {
+          "name": "Filter by Pet Type (Rabbits & Bunnies)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products/?pet_type=rabbits",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", ""],
+              "query": [{ "key": "pet_type", "value": "rabbits" }]
+            }
+          }
+        },
+        {
+          "name": "Filter by Category (Food)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products/?category=food-nutrition",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", ""],
+              "query": [{ "key": "category", "value": "food-nutrition" }]
+            }
+          }
+        },
+        {
+          "name": "Search Products (e.g. 'Chew' or 'Bed')",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products/?search=chew",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", ""],
+              "query": [{ "key": "search", "value": "chew" }]
+            }
+          }
+        },
+        {
+          "name": "Get Product Detail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products/1/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "List Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products/categories/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", "categories", ""]
+            }
+          }
+        },
+        {
+          "name": "List Pet Types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products/pet-types/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", "pet-types", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03. Cart",
+      "item": [
+        {
+          "name": "Get Cart",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/cart/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cart", ""]
+            }
+          }
+        },
+        {
+          "name": "Add Item to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_id\": 2,\n  \"quantity\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/cart/items/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cart", "items", ""]
+            }
+          }
+        },
+        {
+          "name": "Update Cart Item Quantity",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 3\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/cart/items/1/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cart", "items", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Remove Item from Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/cart/items/1/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cart", "items", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Clear Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/cart/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cart", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04. Orders & Checkout",
+      "item": [
+        {
+          "name": "Checkout / Place Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shipping_full_name\": \"Alex Johnson\",\n  \"shipping_email\": \"alex@example.com\",\n  \"shipping_phone\": \"+1 555-019-2834\",\n  \"shipping_address\": \"742 Evergreen Terrace, Apt 4B\",\n  \"shipping_city\": \"Springfield\",\n  \"shipping_postal_code\": \"97477\",\n  \"payment_method\": \"Credit Card\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/orders/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders", ""]
+            }
+          }
+        },
+        {
+          "name": "List User Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/orders/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Order Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/orders/1/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Cancel Pending Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/orders/1/cancel/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders", "1", "cancel", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05. Seller Portal",
+      "item": [
+        {
+          "name": "Seller Dashboard KPI Metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{seller_access_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/dashboard/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "dashboard", ""]
+            }
+          }
+        },
+        {
+          "name": "Seller List Own Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{seller_access_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/products/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "products", ""]
+            }
+          }
+        },
+        {
+          "name": "Seller Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{seller_access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Smart Automatic Pet Water Fountain (2.5L)\",\n  \"description\": \"Ultra-quiet circulated filtered water fountain with LED nightlight and triple filtration.\",\n  \"price\": \"34.99\",\n  \"discount_price\": \"29.99\",\n  \"stock\": 15,\n  \"image_url\": \"https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=800&q=80\",\n  \"is_featured\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/seller/products/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "products", ""]
+            }
+          }
+        },
+        {
+          "name": "Seller Update Product",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{seller_access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": \"31.99\",\n  \"stock\": 20\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/seller/products/1/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "products", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Seller Orders Received",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{seller_access_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/orders/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "orders", ""]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
