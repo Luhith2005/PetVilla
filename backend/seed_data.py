@@ -56,14 +56,15 @@ def run_seed():
 
     # 2. Pet Types
     pet_types_data = [
-        {"name": "Dogs", "slug": "dogs", "icon": "dog", "description": "Canine food, raw diets, healthy kibbles and treats."},
-        {"name": "Cats", "slug": "cats", "icon": "cat", "description": "Feline salmon, tuna pates, catnip treats and bone broth."},
-        {"name": "Birds", "slug": "birds", "icon": "bird", "description": "Parrot seed mixes, canary millet, fruit pellets & nectar."},
-        {"name": "Fish & Aquatic", "slug": "fish", "icon": "fish", "description": "Spirulina flakes, sinking algae wafers & bloodworms."},
-        {"name": "Rabbits & Bunnies", "slug": "rabbits", "icon": "rabbit", "description": "Timothy grass hay, meadow pellets & dried botanical greens."},
-        {"name": "Hamsters & Guinea Pigs", "slug": "hamsters", "icon": "rat", "description": "Vitamin C fortified pellets, crunchy muesli & mealworms."},
-        {"name": "Reptiles & Amphibians", "slug": "reptiles", "icon": "worm", "description": "Calcium dusted insect mash, turtle sticks & gecko fruit nectar."},
-        {"name": "Horses & Farm Pets", "slug": "horses", "icon": "horse", "description": "Rolled oats, sweet alfalfa mash & vitamin reward bites."},
+        {"name": "Dogs", "slug": "dogs", "icon": "dog", "description": "Food and supplies selected for a dog's life stage, size, and health."},
+        {"name": "Cats", "slug": "cats", "icon": "cat", "description": "Cat-specific food and supplies selected for the animal's life stage and health."},
+        {"name": "Birds", "slug": "birds", "icon": "bird", "description": "Species-appropriate bird food, perches, enrichment, and care supplies."},
+        {"name": "Fish & Aquatic", "slug": "fish", "icon": "fish", "description": "Aquarium foods and care supplies suited to the fish species and habitat."},
+        {"name": "Rabbits & Bunnies", "slug": "rabbits", "icon": "rabbit", "description": "Hay-first rabbit diets, safe enrichment, and rabbit care supplies."},
+        {"name": "Hamsters & Guinea Pigs", "slug": "hamsters", "icon": "rat", "description": "Species-specific food and supplies for hamsters, guinea pigs, and other small mammals."},
+        {"name": "Small Pets", "slug": "small-pets", "icon": "rabbit", "description": "Supplies for small pets; food must be chosen for the exact species."},
+        {"name": "Reptiles & Amphibians", "slug": "reptiles", "icon": "worm", "description": "Species-specific habitats and care supplies; feeding needs vary across reptiles and amphibians."},
+        {"name": "Horses & Farm Pets", "slug": "horses", "icon": "horse", "description": "Forage-led care and equine supplies chosen for the animal and its needs."},
     ]
 
     pet_types = {}
@@ -77,11 +78,14 @@ def run_seed():
 
     # 3. Categories
     categories_data = [
-        {"name": "Food & Nutrition", "slug": "food-nutrition", "icon": "utensils", "description": "Species-specific balanced diets, raw feeds and wholesome flakes."},
-        {"name": "Treats & Snacks", "slug": "treats-snacks", "icon": "sparkles", "description": "Rewarding crunchy treats, dried fruits, insects & chew biscuits."},
-        {"name": "Toys & Play", "slug": "toys-play", "icon": "gamepad-2", "description": "Interactive puzzles, balls, climbing trees & chew toys."},
-        {"name": "Beds & Furniture", "slug": "beds-furniture", "icon": "bed", "description": "Orthopedic pet beds, cages, hides, and comfortable tanks."},
-        {"name": "Health & Care", "slug": "health-care", "icon": "heart-pulse", "description": "Vitamins, calcium blocks, probiotics and coat grooming."},
+        {"name": "Food & Nutrition", "slug": "food-nutrition", "icon": "utensils", "description": "Food selected for the pet's species and life stage; check labels and ask a veterinarian about individual needs."},
+        {"name": "Treats & Snacks", "slug": "treats-snacks", "icon": "sparkles", "description": "Species-appropriate treats to offer in suitable portions."},
+        {"name": "Toys & Play", "slug": "toys-play", "icon": "gamepad-2", "description": "Species-appropriate enrichment and play supplies."},
+        {"name": "Beds & Furniture", "slug": "beds-furniture", "icon": "bed", "description": "Suitable beds, habitats, hides, and resting places for different pets."},
+        {"name": "Collars, Leashes & Harnesses", "slug": "collars-leashes", "icon": "link", "description": "Properly fitted walking gear for pets for whom collars, leashes, or harnesses are appropriate."},
+        {"name": "Grooming & Hygiene", "slug": "grooming-hygiene", "icon": "scissors", "description": "Grooming and hygiene supplies labeled for the pet species; not every pet should be bathed."},
+        {"name": "Health & Care", "slug": "health-care", "icon": "heart-pulse", "description": "Care supplies; consult a veterinarian before treating illness or giving medicine."},
+        {"name": "Health & Supplements", "slug": "health-supplements", "icon": "heart-pulse", "description": "Health supplies and supplements to use only when appropriate for the pet and directed by a veterinarian."},
     ]
 
     categories = {}
@@ -139,6 +143,49 @@ def run_seed():
             "is_featured": True,
         },
 
+        {
+            "seller": seller_bob,
+            "name": "Pedigree Puppy Chicken & Milk Dry Dog Food (1.2kg)",
+            "description": "Complete puppy food with chicken and milk for growing puppies, including Golden Retrievers, German Shepherds, Labradors, and other breeds. Follow the feeding guide for your puppy's age and weight.",
+            "price": 399.00,
+            "discount_price": 359.00,
+            "stock": 50,
+            "pet_type": pet_types["dogs"],
+            "category": categories["food-nutrition"],
+            "image_url": "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=800&q=80",
+            "rating": 4.8,
+            "reviews_count": 64,
+            "is_featured": True,
+        },
+        {
+            "seller": seller_alice,
+            "name": "Royal Canin German Shepherd Adult Dry Dog Food (3kg)",
+            "description": "Breed-specific complete food formulated for adult German Shepherds. Select food based on your dog's life stage and consult your veterinarian about individual dietary needs.",
+            "price": 2199.00,
+            "discount_price": 1999.00,
+            "stock": 24,
+            "pet_type": pet_types["dogs"],
+            "category": categories["food-nutrition"],
+            "image_url": "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=800&q=80",
+            "rating": 4.9,
+            "reviews_count": 42,
+            "is_featured": False,
+        },
+        {
+            "seller": seller_bob,
+            "name": "Royal Canin Golden Retriever Adult Dry Dog Food (3kg)",
+            "description": "Breed-specific complete food formulated for adult Golden Retrievers. Choose the appropriate life-stage formula and ask your veterinarian for advice about your dog's diet.",
+            "price": 2199.00,
+            "discount_price": 1999.00,
+            "stock": 21,
+            "pet_type": pet_types["dogs"],
+            "category": categories["food-nutrition"],
+            "image_url": "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=800&q=80",
+            "rating": 4.85,
+            "reviews_count": 36,
+            "is_featured": False,
+        },
+
         # --- CAT FOODS ---
         {
             "seller": seller_alice,
@@ -183,6 +230,21 @@ def run_seed():
             "is_featured": False,
         },
 
+        {
+            "seller": seller_bob,
+            "name": "Whiskas Adult Ocean Fish Dry Cat Food (1.2kg)",
+            "description": "Complete adult cat food with an ocean fish flavor, suitable for adult cats including Persian and domestic shorthair cats. Follow the package feeding guide and provide fresh water.",
+            "price": 449.00,
+            "discount_price": 399.00,
+            "stock": 46,
+            "pet_type": pet_types["cats"],
+            "category": categories["food-nutrition"],
+            "image_url": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80",
+            "rating": 4.8,
+            "reviews_count": 53,
+            "is_featured": True,
+        },
+
         # --- BIRD FOODS ---
         {
             "seller": seller_alice,
@@ -207,7 +269,7 @@ def run_seed():
             "stock": 50,
             "pet_type": pet_types["birds"],
             "category": categories["food-nutrition"],
-            "image_url": "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=800&q=80",
+            "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/71/Domestic_canary_from_Morocco.jpg",
             "rating": 4.7,
             "reviews_count": 22,
             "is_featured": False,
@@ -325,7 +387,7 @@ def run_seed():
             "stock": 38,
             "pet_type": pet_types["hamsters"],
             "category": categories["food-nutrition"],
-            "image_url": "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=800&q=80",
+            "image_url": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?auto=format&fit=crop&w=800&q=80",
             "rating": 4.93,
             "reviews_count": 41,
             "is_featured": True,
@@ -344,6 +406,20 @@ def run_seed():
             "reviews_count": 33,
             "is_featured": False,
         },
+        {
+            "seller": seller_bob,
+            "name": "Timothy Hay Sun-Cured Small Pet Grass (2kg)",
+            "description": "First-cut timothy hay for herbivorous small pets such as rabbits and guinea pigs. Provide unlimited hay where appropriate for the species, and ask a veterinarian about individual diet needs.",
+            "price": 699.00,
+            "discount_price": 599.00,
+            "stock": 30,
+            "pet_type": pet_types["small-pets"],
+            "category": categories["food-nutrition"],
+            "image_url": "https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&w=800&q=80",
+            "rating": 4.88,
+            "reviews_count": 29,
+            "is_featured": True,
+        },
 
         # --- REPTILES & AMPHIBIANS FOODS ---
         {
@@ -355,7 +431,7 @@ def run_seed():
             "stock": 30,
             "pet_type": pet_types["reptiles"],
             "category": categories["food-nutrition"],
-            "image_url": "https://images.unsplash.com/photo-1508817628294-5a453fa0b8fb?auto=format&fit=crop&w=800&q=80",
+            "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Eastern-Bearded-Dragon-2.2%2C-Vic%2C-3.1.2008.jpg",
             "rating": 4.86,
             "reviews_count": 29,
             "is_featured": True,
@@ -383,7 +459,7 @@ def run_seed():
             "stock": 25,
             "pet_type": pet_types["reptiles"],
             "category": categories["food-nutrition"],
-            "image_url": "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=800&q=80",
+            "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Gekkoninae_Rhacodactylus_ciliatus_tete.png",
             "rating": 4.94,
             "reviews_count": 37,
             "is_featured": False,
@@ -433,8 +509,7 @@ def run_seed():
     # Update demo cart & order for alex_customer
     cart, _ = Cart.objects.get_or_create(user=customer_alex)
     sample_prod = Product.objects.filter(is_featured=True).first()
-    if sample_prod:
-        CartItem.objects.filter(cart=cart).delete()
+    if sample_prod and not cart.items.exists():
         CartItem.objects.create(cart=cart, product=sample_prod, quantity=1)
 
     print("[SUCCESS] Seed completed successfully with INR prices!")

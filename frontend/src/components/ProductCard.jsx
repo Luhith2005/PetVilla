@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Star, ShoppingBag, Eye, Check } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { getPetImage } from '../data/petCareGuide';
 
 const ProductCard = ({ product, onQuickView }) => {
   const { addToCart } = useCart();
@@ -23,6 +24,7 @@ const ProductCard = ({ product, onQuickView }) => {
     product.discount_price && product.discount_price < product.price
       ? Math.round(((product.price - product.discount_price) / product.price) * 100)
       : null;
+  const isFoodProduct = product.category_name?.toLowerCase().includes('food');
 
   return (
     <div className="product-card card" onClick={() => onQuickView(product)}>
@@ -31,11 +33,15 @@ const ProductCard = ({ product, onQuickView }) => {
         <img
           src={
             product.image_url ||
-            'https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=600&q=80'
+            getPetImage(product.pet_type_name)
           }
           alt={product.name}
           className="product-img"
           loading="lazy"
+          onError={(event) => {
+            event.currentTarget.onerror = null;
+            event.currentTarget.src = getPetImage(product.pet_type_name);
+          }}
         />
 
         <div className="card-top-badges">
@@ -82,6 +88,11 @@ const ProductCard = ({ product, onQuickView }) => {
         </h3>
 
         <p className="product-desc-snippet">{product.description}</p>
+        {product.pet_type_name && (
+          <p className="product-suitable-for">
+            {isFoodProduct ? 'Food for' : 'For'}: {product.pet_type_name}
+          </p>
+        )}
 
         {/* Pricing & Stock */}
         <div className="product-footer">

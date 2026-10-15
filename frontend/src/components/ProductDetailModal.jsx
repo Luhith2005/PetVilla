@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Star, ShoppingBag, ShieldCheck, Truck, RotateCcw, Store, Check } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { getPetImage } from '../data/petCareGuide';
 
 const ProductDetailModal = ({ product, onClose }) => {
   const { addToCart } = useCart();
@@ -14,6 +15,7 @@ const ProductDetailModal = ({ product, onClose }) => {
     product.discount_price && product.discount_price < product.price
       ? Math.round(((product.price - product.discount_price) / product.price) * 100)
       : null;
+  const isFoodProduct = product.category_name?.toLowerCase().includes('food');
 
   const handleAddToCart = async () => {
     if (!product.in_stock) return;
@@ -45,10 +47,14 @@ const ProductDetailModal = ({ product, onClose }) => {
             <img
               src={
                 product.image_url ||
-                'https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=800&q=80'
+                getPetImage(product.pet_type_name)
               }
               alt={product.name}
               className="detail-main-img"
+              onError={(event) => {
+                event.currentTarget.onerror = null;
+                event.currentTarget.src = getPetImage(product.pet_type_name);
+              }}
             />
             {discountPercent && (
               <span className="badge badge-warning detail-discount-pill">
@@ -100,6 +106,11 @@ const ProductDetailModal = ({ product, onClose }) => {
             <div className="detail-divider" />
 
             <p className="detail-description">{product.description}</p>
+            {product.pet_type_name && (
+              <p className="detail-suitable-for">
+                {isFoodProduct ? 'Food for' : 'Made for'}: {product.pet_type_name}
+              </p>
+            )}
 
             {/* Quantity Selector & Add Button */}
             <div className="detail-actions-box">
